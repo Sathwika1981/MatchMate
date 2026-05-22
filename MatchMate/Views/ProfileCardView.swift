@@ -31,13 +31,42 @@ struct ProfileCardView: View {
     }
 
     private var profileImage: some View {
-        Image(systemName: "person.crop.square.fill")
-            .resizable()
-            .scaledToFill()
-            .foregroundStyle(.gray.opacity(0.35))
-            .frame(width: 200, height: 200)
-            .background(Color.gray.opacity(0.12))
-            .clipShape(RoundedRectangle(cornerRadius: 4))
+        Group {
+            if let imageURL = profile.imageURL {
+                AsyncImage(url: imageURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                    case .failure:
+                        imagePlaceholder
+                    case .empty:
+                        ProgressView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .background(Color.gray.opacity(0.25))
+                    @unknown default:
+                        imagePlaceholder
+                    }
+                }
+            } else {
+                imagePlaceholder
+            }
+        }
+        .frame(width: 200, height: 200)
+        .clipShape(RoundedRectangle(cornerRadius: 4))
+    }
+
+    private var imagePlaceholder: some View {
+        RoundedRectangle(cornerRadius: 4)
+            .fill(Color.gray.opacity(0.25))
+            .overlay {
+                Image(systemName: "person.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.white.opacity(0.85))
+                    .padding(36)
+            }
     }
 
     @ViewBuilder
@@ -51,26 +80,22 @@ struct ProfileCardView: View {
             .padding(.top, 8)
 
         case .accepted:
-            Text("Accepted")
-                .font(.headline)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(Color.matchMateAccent)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.top, 8)
-            
+            statusLabel("Accepted")
+
         case .declined:
-            Text("Declined")
-                .font(.headline)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(Color.matchMateAccent)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .padding(.top, 8)
+            statusLabel("Declined")
         }
-        
+    }
+
+    private func statusLabel(_ title: String) -> some View {
+        Text(title)
+            .font(.headline)
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 14)
+            .background(Color.matchMateAccent)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .padding(.top, 8)
     }
 
     private func actionCircle(icon: String, action: (() -> Void)?) -> some View {
@@ -92,13 +117,13 @@ struct ProfileCardView: View {
 }
 
 #Preview("Pending") {
-    ProfileCardView(profile: Profile.samples[0])
+    ProfileCardView(profile: .preview)
         .padding()
         .background(Color.matchMateBackground)
 }
 
 #Preview("Accepted") {
-    ProfileCardView(profile: Profile.samples[1])
+    ProfileCardView(profile: .previewAccepted)
         .padding()
         .background(Color.matchMateBackground)
 }
