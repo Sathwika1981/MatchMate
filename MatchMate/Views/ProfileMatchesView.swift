@@ -18,10 +18,10 @@ struct ProfileMatchesView: View {
         }
         .background(Color.matchMateBackground)
         .task {
-            await viewModel.loadProfiles()
+            viewModel.loadProfiles()
         }
         .refreshable {
-            await viewModel.loadProfiles()
+            viewModel.loadProfiles()
         }
     }
 
@@ -37,8 +37,8 @@ struct ProfileMatchesView: View {
             ForEach(viewModel.profiles) { profile in
                 ProfileCardView(
                     profile: profile,
-                    onReject: { reject(profile) },
-                    onAccept: { accept(profile) }
+                    onReject: { viewModel.reject(profile) },
+                    onAccept: { viewModel.accept(profile) }
                 )
             }
         }
@@ -56,21 +56,6 @@ struct ProfileMatchesView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 40)
-    }
-
-    private func reject(_ profile: Profile) {
-        updateStatus(for: profile, to: .declined)
-    }
-
-    private func accept(_ profile: Profile) {
-        updateStatus(for: profile, to: .accepted)
-    }
-
-    private func updateStatus(for profile: Profile, to status: ProfileMatchStatus) {
-        guard let index = viewModel.profiles.firstIndex(where: { $0.id == profile.id }) else { return }
-        var updated = viewModel.profiles[index]
-        updated.status = status
-        viewModel.profiles[index] = updated
     }
 }
 
