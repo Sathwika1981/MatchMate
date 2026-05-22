@@ -46,6 +46,8 @@ final class ProfileRepository: ProfileRepositoryProtocol {
             let remoteProfiles = try await apiService.fetchProfiles()
             let savedIDs = Set(savedProfiles.map(\.id))
 
+            // Filtering out profiles that are already stored locally to avoid
+            // duplicates when new data is fetched from the API.
             let uniqueRemoteProfiles = remoteProfiles.filter {
                 !savedIDs.contains($0.id)
             }
@@ -69,13 +71,15 @@ final class ProfileRepository: ProfileRepositoryProtocol {
         try coreDataManager.updateProfile(profile: profile, status: status)
     }
 
+    // Observing network connectivity changes using NotificationCenter to automatically
+    // sync and refresh profiles when internet connection is restored after offline usage.
     private func observeConnectivity() {
         connectivityObserver = NotificationCenter.default.addObserver(
             forName: .networkStatusChanged,
             object: nil,
             queue: .main
         ) { [weak self] notification in
-
+            
             guard let self,
                   let isConnected = notification.userInfo?["isConnected"] as? Bool else {
                 return
@@ -95,6 +99,8 @@ final class ProfileRepository: ProfileRepositoryProtocol {
         do {
             let profiles = try await fetchProfiles()
 
+            // Executed on MainActor because updating profiles triggers UI state changes
+            // and all UI-related updates must happen on the main thread.
             await MainActor.run {
                 onProfilesUpdated?(profiles)
             }

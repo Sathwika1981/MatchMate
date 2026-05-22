@@ -21,6 +21,10 @@ final class NetworkMonitor {
             let didChange = self.isConnected != connected
             self.isConnected = connected
 
+            // Network connectivity is a global app-level event
+            // NotificationCenter is used here to broadcast network connectivity changes across the app.
+            // This keeps the architecture loosely coupled, allowing ViewModels, repositories, and other
+            // services to react to connectivity updates without directly depending on NetworkMonitor.
             if didChange {
                 NotificationCenter.default.post(
                     name: .networkStatusChanged,

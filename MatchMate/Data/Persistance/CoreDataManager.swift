@@ -34,6 +34,8 @@ final class CoreDataManager: CoreDataManagerProtocol {
         }
     }
 
+    // Persisting only profiles with accepted or declined status
+    // so decisions remain available across app relaunches.
     func saveProfiles(_ profiles: [Profile]) throws {
         let filteredProfiles = profiles.filter {
             $0.status == .accepted || $0.status == .declined

@@ -51,7 +51,7 @@ struct ProfileMatchesView: View {
             Text(error.errorDescription ?? "Something went wrong. Please try again.")
         } actions: {
             Button("Try Again") {
-                Task { await viewModel.loadProfiles() }
+                Task { viewModel.loadProfiles() }
             }
         }
         .frame(maxWidth: .infinity)

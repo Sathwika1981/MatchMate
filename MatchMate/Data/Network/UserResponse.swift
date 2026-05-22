@@ -55,6 +55,8 @@ struct UserLocation: Decodable {
         coordinates = try container.decode(Coordinates.self, forKey: .coordinates)
         timezone = try container.decode(Timezone.self, forKey: .timezone)
 
+        // Custom decoding is required because the API returns the postal code
+        // inconsistently as either a String or an Int.
         if let string = try? container.decode(String.self, forKey: .postcode) {
             postcode = string
         } else if let number = try? container.decode(Int.self, forKey: .postcode) {

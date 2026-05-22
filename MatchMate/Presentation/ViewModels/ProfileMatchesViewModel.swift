@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 
-@MainActor
 final class ProfileMatchesViewModel: ObservableObject {
     @Published var profiles: [Profile] = []
     @Published var isLoading = false
@@ -19,7 +18,10 @@ final class ProfileMatchesViewModel: ObservableObject {
     }
 
     func loadProfiles() {
+        // Explicitly cancelling any existing task before starting a new fetch request
+        // to prevent overlapping API calls and ensure a consistent refresh experience.
         loadTask?.cancel()
+        
         loadTask = Task {
             isLoading = true
             apiError = nil
