@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ProfileServiceProtocol {
-    func fetchProfiles(count: Int) async throws -> [Profile]
+    func fetchProfiles() async throws -> [Profile]
 }
 
 final class ProfileService: ProfileServiceProtocol {
@@ -11,8 +11,8 @@ final class ProfileService: ProfileServiceProtocol {
         self.session = session
     }
 
-    func fetchProfiles(count: Int = 10) async throws -> [Profile] {
-        guard let url = Endpoint.fetchMatches(count).url else {
+    func fetchProfiles() async throws -> [Profile] {
+        guard let url = Endpoint.fetchMatches.url else {
             throw APIError.invalidURL
         }
 

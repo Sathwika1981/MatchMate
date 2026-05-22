@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C318A33A2FC0952D00A98AA1 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = SDWEB0022FBEF2E400A98AA1 /* SDWebImageSwiftUI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		C318A2772FBEF2E400A98AA1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C318A33A2FC0952D00A98AA1 /* SDWebImageSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,13 +201,13 @@
 			);
 			mainGroup = C318A2602FBEF2E300A98AA1;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				SDWEB0012FBEF2E400A98AA1 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C318A26A2FBEF2E300A98AA1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
-			packageReferences = (
-				SDWEB0012FBEF2E400A98AA1 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-			);
 			targets = (
 				C318A2682FBEF2E300A98AA1 /* MatchMate */,
 				C318A2752FBEF2E400A98AA1 /* MatchMateTests */,

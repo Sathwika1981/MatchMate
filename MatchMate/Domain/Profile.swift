@@ -1,6 +1,6 @@
 import Foundation
 
-enum ProfileMatchStatus {
+enum ProfileMatchStatus: String, Equatable {
     case pending
     case accepted
     case declined

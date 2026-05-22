@@ -1,12 +1,12 @@
 import Foundation
 
 enum Endpoint {
-    case fetchMatches(Int)
+    case fetchMatches
 
     var url: URL? {
         switch self {
-        case .fetchMatches(let count):
-            URL(string: "https://randomuser.me/api/?results=\(count)")
+        case .fetchMatches:
+            URL(string: "https://randomuser.me/api/?results=10")
         }
     }
 }
