@@ -1,3 +1,4 @@
+import SDWebImageSwiftUI
 import SwiftUI
 
 struct ProfileCardView: View {
@@ -33,28 +34,28 @@ struct ProfileCardView: View {
     private var profileImage: some View {
         Group {
             if let imageURL = profile.imageURL {
-                AsyncImage(url: imageURL) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFill()
-                    case .failure:
-                        imagePlaceholder
-                    case .empty:
-                        ProgressView()
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .background(Color.gray.opacity(0.25))
-                    @unknown default:
-                        imagePlaceholder
-                    }
+                WebImage(url: imageURL) { image in
+                    image.resizable()
+                } placeholder: {
+                    imageLoadingPlaceholder
                 }
+                .onFailure { _ in }
+                .indicator(.activity)
+                .transition(.fade(duration: 0.3))
+                .scaledToFill()
             } else {
                 imagePlaceholder
             }
         }
         .frame(width: 200, height: 200)
         .clipShape(RoundedRectangle(cornerRadius: 4))
+    }
+
+    private var imageLoadingPlaceholder: some View {
+        ZStack {
+            Color.gray.opacity(0.25)
+            ProgressView()
+        }
     }
 
     private var imagePlaceholder: some View {
