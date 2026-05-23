@@ -1,95 +1,130 @@
-MatchMate
+# MatchMate
 
-MatchMate is a simple matchmaking-style iOS app built using SwiftUI. It focuses on clean architecture, offline support, and a smooth user experience for accepting or declining profile matches.
+MatchMate is a modern iOS matchmaking-style application built using **SwiftUI**.  
+It demonstrates a clean and scalable architecture using **MVVM + Repository pattern**, with offline-first support using **Core Data**.
 
-The goal of this project is to demonstrate how a real-world app can be structured using MVVM + Repository pattern, while keeping data consistent across network and local storage.
+The app focuses on smooth UI interactions like accepting and declining profiles, while ensuring data persistence and offline usability.
 
-What the app does
-1. Shows a list of user profiles in a card-based UI
-2. Lets users Accept or Decline matches
-3. Saves decisions locally so they persist after app restart
-4. Works even without internet using cached data
-5. Syncs data automatically when network is available again
+---
 
-The app follows a simple but scalable MVVM + Repository setup:
+## Features
 
-UI (SwiftUI Views)
-   ↓
-ViewModel
-   ↓
-Repository
-   ↓
+- Browse user profiles in a clean card-based UI  
+- ✅ Accept / ❌ Decline match functionality  
+- 💾 Persistent storage using Core Data  
+- 🌐 API-based profile fetching using URLSession  
+- 🔄 Offline-first support with cached data  
+- Reactive UI updates using Combine / @Published  
+- Fully SwiftUI-based modern UI  
+
+---
+
+## 🧱 Architecture
+
+MatchMate follows a clean **MVVM + Repository architecture**:
+
+SwiftUI Views
+↓
+ViewModel (State Management)
+↓
+Repository (Single Source of Truth)
+↓
 Data Sources (API / Core Data)
 
-Why this architecture
 
-I kept the structure modular so that:
+### Key Idea
 
-1. UI stays clean and dumb
-2. Business logic is testable
-3. Data layer can switch sources without affecting UI
-4. Offline support is easy to manage
+- UI is completely decoupled from data sources  
+- Repository decides whether data comes from **network or local storage**  
+- ViewModels only handle UI state and business flow  
 
-Core Data is used as a local cache so the app still works without internet.
+---
 
-Tech used:
-1. Swift 5
-2. SwiftUI
-3. Combine / @Published
-4. Core Data
-5. URLSession
-6. MVVM + Repository pattern
+## Design Principles
 
-Data handling
+- Separation of concerns  
+- Single responsibility per layer  
+- Offline-first data strategy  
+- Scalable and testable architecture  
+- Reactive UI updates  
+
+---
+
+## Tech Stack
+
+- Swift 5+
+- SwiftUI
+- Combine
+- Core Data
+- URLSession
+- MVVM Architecture
+
+---
+
+## Data Persistence
+
 The app stores:
 
-1. Profiles fetched from API
-2. User actions (Accepted / Declined status)
-3. Cached responses for offline use
+- User profiles  
+- Match status (Accepted / Declined)  
+- Cached API responses  
 
-So even after killing the app, your last state is still there
+✔ Data is automatically restored when the app is relaunched  
+✔ Works seamlessly in offline mode  
 
-Accept / Decline flow:
+---
 
-When you tap:
-Accept
+## Match Flow
 
-1. Profile status is updated to “Accepted”
-2. Saved in Core Data
-3. UI updates immediately
+### ✅ Accept Profile
+- Updates status to **Accepted**
+- Saves state in Core Data
+- UI updates instantly
 
-Decline
+### ❌ Decline Profile
+- Updates status to **Declined**
+- Persists locally
+- Updates or removes card from UI
 
-1. Status updated to “Declined”
-2. Stored locally
-3. Card updates or gets removed based on state
+---
 
-Offline behavior
+## 🌐 Offline Support
 
-If the device goes offline:
+- Profiles are cached after first API fetch  
+- App continues working without internet  
+- Core Data acts as fallback storage  
+- Auto-sync when network is restored  
 
-1. App falls back to Core Data
-2. Previously loaded profiles still appear
-3. No crashes or empty screens
+---
 
-When back online:
+## 📸 Screenshots
 
-Repository syncs and refreshes data automatically
+> Add your screenshots inside: `Assets/screenshots/`
 
-Running the project:
+### 🧑‍🤝‍🧑 Match List Screen
 
+---
+
+### 👤 Profile Card View
+
+---
+
+### ✅ Accepted State
+
+---
+
+## Getting Started
+
+### Requirements
+
+- Xcode 15+
+- iOS 16+
+- Swift 5.9+
+
+### ⚙️ Installation
+
+```bash
 git clone https://github.com/yourusername/MatchMate.git
 cd MatchMate
 open MatchMate.xcodeproj
 
-Then just run on the Xcode
-
-What I’d improve next
-
-If this were a production app, I’d add:
-
-1. Search & filters for profiles
-2. Chat after a match
-3. Push notifications
-4. Cloud sync (CloudKit/Firebase)
-5. UI tests + better unit test coverage
