@@ -73,5 +73,12 @@ struct ProfileMatchesView: View {
 }
 
 #Preview {
-    ProfileMatchesView()
+    let mockViewModel = ProfileMatchesViewModel()
+
+        mockViewModel.profiles = [
+            Profile.preview,
+            Profile.previewAccepted
+        ]
+
+    return ProfileMatchesView(viewModel: mockViewModel)
 }

@@ -99,8 +99,6 @@ The app stores:
 
 ## 📸 Screenshots
 
-> Add your screenshots inside: `Assets/screenshots/`
-
 ### 🧑‍🤝‍🧑 Match List Screen
 Shows all available profiles in a clean card-based layout.
 
