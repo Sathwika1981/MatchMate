@@ -1,8 +1,19 @@
 import SwiftUI
 
 struct ProfileMatchesView: View {
-    @StateObject private var viewModel = ProfileMatchesViewModel()
-
+    @StateObject private var viewModel: ProfileMatchesViewModel
+    private let logger: AppLogger
+    
+    init(
+        viewModel: ProfileMatchesViewModel = ProfileMatchesViewModel(),
+        logger: AppLogger = .shared
+    ) {
+        _viewModel = StateObject(
+            wrappedValue: viewModel
+        )
+        self.logger = logger
+    }
+    
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 20) {
@@ -18,9 +29,11 @@ struct ProfileMatchesView: View {
         }
         .background(Color.matchMateBackground)
         .task {
+            logger.info("ProfileMatchesView appeared - .task triggered", category: .ui)
             viewModel.loadProfiles()
         }
         .refreshable {
+            logger.info("Pull-to-refresh triggered", category: .ui)
             viewModel.loadProfiles()
         }
     }

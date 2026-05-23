@@ -9,18 +9,27 @@ protocol CoreDataManagerProtocol {
 
 final class CoreDataManager: CoreDataManagerProtocol {
     static let shared = CoreDataManager()
+    
+    private let logger : AppLogger
 
-    private init() {}
+    private init(
+        logger: AppLogger = .shared
+    ) {
+        self.logger = logger
+    }
 
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "MatchMate")
-
+        
         container.loadPersistentStores { _, error in
             if let error {
+                self.logger.error("CoreData load error: \(error.localizedDescription)", category: .general)
                 fatalError("Core Data Error: \(error)")
             }
+            
+            self.logger.info("Persistent stores loaded successfully", category: .general)
         }
-
+        
         return container
     }()
 
@@ -31,6 +40,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
     private func saveContext() throws {
         if context.hasChanges {
             try context.save()
+            logger.info("Context saved successfully", category: .general)
         }
     }
 
@@ -64,7 +74,10 @@ final class CoreDataManager: CoreDataManagerProtocol {
     func fetchProfiles() throws -> [Profile] {
         let request = CDMatchUser.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
         let entities = try context.fetch(request)
+        logger.debug("Fetched CoreData entities: \(entities.count)", category: .general)
+                     
         return entities.map { $0.toDomain() }
     }
 
@@ -85,6 +98,8 @@ final class CoreDataManager: CoreDataManagerProtocol {
         entity.status = status.rawValue
 
         try saveContext()
+        
+        logger.info("Profile updated in CoreData successfully", category: .general)
     }
 
     private static func makeMatchUser(in context: NSManagedObjectContext) -> CDMatchUser {
