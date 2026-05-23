@@ -134,3 +134,12 @@ git clone https://github.com/yourusername/MatchMate.git
 cd MatchMate
 open MatchMate.xcodeproj
 
+## 📈 Future Improvements
+
+- 🔍 Search and filter profiles for better discovery  
+- 💬 Chat feature enabled after a successful match  
+- 🔔 Push notifications for real-time updates  
+- ☁️ Cloud sync using CloudKit / Firebase for cross-device support  
+- 🧪 Full unit and UI test coverage for improved reliability  
+- 🎨 Enhanced animations and smoother transitions for better UX  
+
