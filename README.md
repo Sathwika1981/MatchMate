@@ -102,16 +102,24 @@ The app stores:
 > Add your screenshots inside: `Assets/screenshots/`
 
 ### 🧑‍🤝‍🧑 Match List Screen
+Shows all available profiles in a clean card-based layout.
+
+![Match List](Assets/screenshots/match_list.png)
 
 ---
 
 ### 👤 Profile Card View
+Displays full user details with Accept / Decline actions.
+
+![Profile Card](Assets/screenshots/profile_card.png)
 
 ---
 
 ### ✅ Accepted State
 
----
+Shows UI update after accepting a profile.
+
+![Accepted State](Assets/screenshots/accepted_state.png)
 
 ## Getting Started
 
