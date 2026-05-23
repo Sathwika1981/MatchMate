@@ -104,14 +104,14 @@ The app stores:
 ### 🧑‍🤝‍🧑 Match List Screen
 Shows all available profiles in a clean card-based layout.
 
-![Match List](Assets/screenshots/match_list.png)
+![Match List](Assets/match_list.png)
 
 ---
 
 ### 👤 Profile Card View
 Displays full user details with Accept / Decline actions.
 
-![Profile Card](Assets/screenshots/profile_card.png)
+![Profile Card](Assets/profile_card.png)
 
 ---
 
@@ -119,7 +119,7 @@ Displays full user details with Accept / Decline actions.
 
 Shows UI update after accepting a profile.
 
-![Accepted State](Assets/screenshots/accepted_state.png)
+![Accepted State](Assets/accepted_state.png)
 
 ## Getting Started
 
