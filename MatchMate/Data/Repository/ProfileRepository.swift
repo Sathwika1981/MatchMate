@@ -44,6 +44,8 @@ final class ProfileRepository: ProfileRepositoryProtocol {
 
         do {
             let remoteProfiles = try await apiService.fetchProfiles()
+            let userResponse = try await apiService.fetchProfiles()
+            let remoteProfiles = ProfileMapper.toDomain(userResponse)
             let savedIDs = Set(savedProfiles.map(\.id))
 
             // Filtering out profiles that are already stored locally to avoid

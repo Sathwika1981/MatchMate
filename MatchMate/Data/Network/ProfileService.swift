@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ProfileServiceProtocol {
-    func fetchProfiles() async throws -> [Profile]
+    func fetchProfiles() async throws -> UserResponse
 }
 
 final class ProfileService: ProfileServiceProtocol {
@@ -11,7 +11,7 @@ final class ProfileService: ProfileServiceProtocol {
         self.session = session
     }
 
-    func fetchProfiles() async throws -> [Profile] {
+    func fetchProfiles() async throws -> UserResponse {
         guard let url = Endpoint.fetchMatches.url else {
             throw APIError.invalidURL
         }
@@ -46,7 +46,7 @@ final class ProfileService: ProfileServiceProtocol {
 
         do {
             let userResponse = try JSONDecoder().decode(UserResponse.self, from: data)
-            return ProfileMapper.toDomain(userResponse)
+            return userResponse
         } catch {
             throw APIError.decodingError
         }
