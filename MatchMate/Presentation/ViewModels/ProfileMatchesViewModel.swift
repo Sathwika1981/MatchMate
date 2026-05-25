@@ -30,7 +30,9 @@ final class ProfileMatchesViewModel: ObservableObject {
         logger.info("loadProfiles called", category: .profile)
         loadTask?.cancel()
         
-        loadTask = Task {
+        loadTask = Task { [weak self] in
+            
+            guard let self else { return }
             isLoading = true
             apiError = nil
             
@@ -38,14 +40,14 @@ final class ProfileMatchesViewModel: ObservableObject {
             
             do {
                 let profiles = try await repository.fetchProfiles()
-                logger.info("Fetched \(profiles.count) profiles")
+                self.logger.info("Fetched \(profiles.count) profiles")
                 
                 if !Task.isCancelled {
                     self.profiles = profiles
                 }
             } catch {
                 apiError = .unknown(error)
-                logger.error("Fetch failed: \(error.localizedDescription)")
+                self.logger.error("Fetch failed: \(error.localizedDescription)")
             }
         }
     }
